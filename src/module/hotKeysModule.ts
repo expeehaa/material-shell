@@ -533,7 +533,7 @@ export class HotKeysModule {
         });
 
         this.actionNameToActionMap.forEach((action, name) => {
-            this.addKeybinding(name);
+            this.addKeybinding(name, action);
         });
     }
 
@@ -542,15 +542,7 @@ export class HotKeysModule {
         this.nextStash = null;
     }
 
-    addKeybinding(name: string) {
-        const actionCallback = this.actionNameToActionMap.get(name);
-        if (actionCallback === undefined) {
-            Me.log(
-                'Error: Cannot add keybinding. No such action exists: ' + name
-            );
-            return;
-        }
-
+    addKeybinding(name: string, actionCallback: () => void) {
         const actionId = Main.wm.addKeybinding(
             name,
             this.settings,
